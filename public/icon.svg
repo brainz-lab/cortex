@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="cortex-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#cortex-gradient)"/>
+  <path d="M32 14V16M44.7279 19.2721L43.3137 20.6863M50 32H48M16 32H14M20.6863 20.6863L19.2721 19.2721M26.3301 46H37.6699M32 46V48C32 50.2091 30.2091 52 28 52H36C33.7909 52 32 50.2091 32 48V46ZM32 46C35.866 46 39 42.866 39 39C39 35.134 35.866 32 32 32C28.134 32 25 35.134 25 39C25 42.866 28.134 46 32 46ZM39 39C39 35.134 35.866 32 32 32C28.134 32 25 28.866 25 25C25 21.134 28.134 18 32 18C35.866 18 39 21.134 39 25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

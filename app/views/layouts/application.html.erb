@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="h-full">
   <head>
     <title><%= content_for(:title) || "Cortex" %></title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Cortex">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Smart feature decisions - Feature flags and rollout management">
+    <meta name="theme-color" content="#ea580c">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -18,14 +21,108 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Google Fonts - Inter for UI, JetBrains Mono for code %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+  <body class="h-full antialiased">
+    <%# Flash Messages %>
+    <% if flash.any? %>
+      <div class="fixed top-4 right-4 z-50 space-y-2" data-controller="flash">
+        <% flash.each do |type, message| %>
+          <% alert_class = case type.to_s
+              when 'notice', 'success' then 'alert-success'
+              when 'alert', 'error' then 'alert-error'
+              when 'warning' then 'alert-warning'
+              else 'alert-info'
+            end
+          %>
+          <div class="alert <%= alert_class %> shadow-lg animate-slide-up flex items-center justify-between gap-4 min-w-[300px]">
+            <span><%= message %></span>
+            <button type="button" class="text-current opacity-60 hover:opacity-100" data-action="click->flash#dismiss">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Navigation Header %>
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-stone-200/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <%# Logo %>
+          <div class="flex items-center gap-3">
+            <a href="/" class="flex items-center gap-3 text-stone-900 hover:text-stone-900">
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+              </div>
+              <span class="font-semibold text-lg tracking-tight">Cortex</span>
+            </a>
+            <span class="hidden sm:inline-block text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">beta</span>
+          </div>
+
+          <%# Navigation Links %>
+          <nav class="hidden md:flex items-center gap-1">
+            <%= link_to "Dashboard", "#", class: "nav-link nav-link-active" %>
+            <%= link_to "Flags", "#", class: "nav-link" %>
+            <%= link_to "Segments", "#", class: "nav-link" %>
+            <%= link_to "Environments", "#", class: "nav-link" %>
+            <%= link_to "Settings", "#", class: "nav-link" %>
+          </nav>
+
+          <%# User Menu / Actions %>
+          <div class="flex items-center gap-3">
+            <%# API Status Indicator %>
+            <div class="hidden sm:flex items-center gap-2 text-xs text-stone-500 bg-stone-50 px-3 py-1.5 rounded-full border border-stone-200/60">
+              <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+              <span>API Connected</span>
+            </div>
+
+            <%# User Avatar / Menu %>
+            <button type="button" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-stone-100 transition-colors">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center text-white text-sm font-medium">
+                U
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <%# Main Content %>
+    <main class="flex-1">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <%= yield %>
+      </div>
     </main>
+
+    <%# Footer %>
+    <footer class="border-t border-stone-200/60 bg-white/50 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2 text-sm text-stone-500">
+            <span class="font-medium text-stone-700">Cortex</span>
+            <span>by</span>
+            <a href="https://brainzlab.ai" class="text-orange-600 hover:text-orange-700 font-medium">Brainz Lab</a>
+          </div>
+          <div class="flex items-center gap-6 text-sm text-stone-500">
+            <a href="#" class="hover:text-stone-700 transition-colors">Documentation</a>
+            <a href="#" class="hover:text-stone-700 transition-colors">API Reference</a>
+            <a href="#" class="hover:text-stone-700 transition-colors">Status</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
