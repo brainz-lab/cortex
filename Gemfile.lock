@@ -5,6 +5,14 @@ PATH
       concurrent-ruby (~> 1.0)
       logger (~> 1.5)
 
+PATH
+  remote: /brainzlab-ui
+  specs:
+    brainzlab-ui (0.1.0)
+      phlex (~> 2.0)
+      phlex-rails (~> 2.0)
+      rails (>= 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -229,6 +237,12 @@ GEM
     pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-linux)
     pg (1.6.2-x86_64-linux-musl)
+    phlex (2.3.1)
+      zeitwerk (~> 2.7)
+    phlex-rails (2.3.1)
+      phlex (~> 2.3.0)
+      railties (>= 7.1, < 9)
+      zeitwerk (~> 2.7)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -406,6 +420,7 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap
   brainzlab!
+  brainzlab-ui!
   brakeman
   bundler-audit
   debug
@@ -414,6 +429,7 @@ DEPENDENCIES
   jbuilder
   kamal
   pg (~> 1.1)
+  phlex-rails (~> 2.0)
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.1)

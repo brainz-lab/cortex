@@ -29,7 +29,7 @@ BrainzLab.configure do |config|
   config.pulse_enabled = ENV.fetch("PULSE_ENABLED", "true") == "true"
   config.pulse_url = ENV.fetch("PULSE_URL", "http://pulse:3000")
   config.pulse_master_key = ENV["PULSE_MASTER_KEY"]
-  config.pulse_buffer_size = 1 if Rails.env.development?  # Send immediately in dev
+  config.pulse_buffer_size = 10 if Rails.env.development?  # Batch traces to reduce HTTP calls
 
   # Buffer settings for development
   config.recall_buffer_size = 1 if Rails.env.development?  # Send logs immediately in dev

@@ -55,6 +55,14 @@ else
   gem "brainzlab", "~> 0.1.1"
 end
 
+# BrainzLab UI - Unified design system with Phlex components
+if File.exist?("/brainzlab-ui")
+  gem "brainzlab-ui", path: "/brainzlab-ui"
+else
+  gem "brainzlab-ui", "~> 0.1.0"
+end
+gem "phlex-rails", "~> 2.0"
+
 # Cortex-specific dependencies
 
 
