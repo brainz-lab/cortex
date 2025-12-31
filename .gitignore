@@ -63,3 +63,6 @@
 # Node modules (if not already present)
 /node_modules
 
+
+# Test coverage
+coverage/
