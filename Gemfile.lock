@@ -1,22 +1,7 @@
-PATH
-  remote: /brainzlab-sdk
-  specs:
-    brainzlab (0.1.1)
-      concurrent-ruby (~> 1.0)
-      logger (~> 1.5)
-
-PATH
-  remote: /brainzlab-ui
-  specs:
-    brainzlab-ui (0.1.0)
-      phlex (~> 2.0)
-      phlex-rails (~> 2.0)
-      rails (>= 7.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
-    action_text-trix (2.1.15)
+    action_text-trix (2.1.16)
       railties
     actioncable (8.1.1)
       actionpack (= 8.1.1)
@@ -116,6 +101,13 @@ GEM
     bindex (0.8.1)
     bootsnap (1.20.1)
       msgpack (~> 1.2)
+    brainzlab (0.1.2)
+      concurrent-ruby (~> 1.0)
+      logger (~> 1.5)
+    brainzlab-ui (0.1.0)
+      phlex (~> 2.0)
+      phlex-rails (~> 2.0)
+      rails (>= 7.0)
     brakeman (7.1.2)
       racc
     builder (3.3.0)
@@ -212,19 +204,19 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.5)
-    nokogiri (1.18.10-aarch64-linux-gnu)
+    nokogiri (1.19.0-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.10-aarch64-linux-musl)
+    nokogiri (1.19.0-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.10-arm-linux-gnu)
+    nokogiri (1.19.0-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.10-arm-linux-musl)
+    nokogiri (1.19.0-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.10-arm64-darwin)
+    nokogiri (1.19.0-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.10-x86_64-linux-gnu)
+    nokogiri (1.19.0-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.10-x86_64-linux-musl)
+    nokogiri (1.19.0-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.3)
     parallel (1.27.0)
@@ -419,8 +411,8 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3
   bootsnap
-  brainzlab!
-  brainzlab-ui!
+  brainzlab (~> 0.1.1)
+  brainzlab-ui (~> 0.1.0)
   brakeman
   bundler-audit
   debug
