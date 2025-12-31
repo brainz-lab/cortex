@@ -31,6 +31,9 @@ RUN bundle install && \
 
 COPY . .
 
+# Create symlink for brainzlab-ui assets (used by Tailwind CSS imports)
+RUN ln -s "$(bundle show brainzlab-ui)" /brainzlab-ui
+
 RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
