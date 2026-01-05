@@ -1,7 +1,7 @@
 PATH
   remote: ../brainzlab-sdk
   specs:
-    brainzlab (0.1.2)
+    brainzlab (0.1.4)
       concurrent-ruby (~> 1.0)
       logger (~> 1.5)
 
@@ -129,6 +129,7 @@ GEM
     debug (1.11.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    docile (1.4.1)
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -179,6 +180,7 @@ GEM
       thor (~> 1.3)
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.5)
+    lefthook (2.0.13)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.25.0)
@@ -342,6 +344,12 @@ GEM
       ffi (~> 1.12)
       logger
     securerandom (0.4.1)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -428,6 +436,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  lefthook
   pg (~> 1.1)
   phlex-rails (~> 2.0)
   propshaft
@@ -435,6 +444,7 @@ DEPENDENCIES
   rails (~> 8.1.1)
   redis (~> 5.0)
   rubocop-rails-omakase
+  simplecov
   solid_cable
   solid_cache
   solid_queue
