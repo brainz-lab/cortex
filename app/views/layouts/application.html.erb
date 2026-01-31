@@ -30,17 +30,12 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
-    <%# Dark mode initialization - runs before body renders to prevent flash %>
+    <%# Prevent flash of wrong theme on page load %>
     <script>
       (function() {
-        const storageKey = 'cortex-theme';
-        const storedTheme = localStorage.getItem(storageKey);
-
-        if (storedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else if (storedTheme === 'light') {
-          document.documentElement.classList.add('light');
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        const savedTheme = localStorage.getItem('brainzlab-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
           document.documentElement.classList.add('dark');
         } else {
           document.documentElement.classList.add('light');
