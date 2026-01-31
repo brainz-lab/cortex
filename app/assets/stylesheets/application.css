@@ -1,4 +1,5 @@
 /* BrainzLab Unified Design System */
 @import "brainzlab_ui/base";
 
-/* Cortex-specific overrides below */
+/* Cortex-specific styles */
+@import "./dark_mode.css";

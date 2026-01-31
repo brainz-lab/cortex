@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full" data-controller="dark-mode">
   <head>
     <title><%= content_for(:title) || "Cortex" %></title>
     <meta charset="utf-8">
@@ -30,6 +30,24 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
+    <%# Dark mode initialization - runs before body renders to prevent flash %>
+    <script>
+      (function() {
+        const storageKey = 'cortex-theme';
+        const storedTheme = localStorage.getItem(storageKey);
+
+        if (storedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (storedTheme === 'light') {
+          document.documentElement.classList.add('light');
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+
     <%# Google Analytics - only in production %>
     <% if Rails.env.production? %>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-CXHFR6PC8W"></script>
@@ -42,7 +60,7 @@
     <% end %>
   </head>
 
-  <body class="h-full antialiased">
+  <body class="h-full antialiased bg-cream-50 text-ink-900 dark:bg-dark-bg dark:text-dark-text">
     <%# Flash Messages %>
     <% if flash.any? %>
       <div class="fixed top-4 right-4 z-50 space-y-2" data-controller="flash">
@@ -67,20 +85,20 @@
     <% end %>
 
     <%# Navigation Header %>
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-stone-200/60">
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-lg border-b border-cream-200 dark:border-dark-border">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <%# Logo %>
           <div class="flex items-center gap-3">
-            <a href="/" class="flex items-center gap-3 text-stone-900 hover:text-stone-900">
+            <a href="/" class="flex items-center gap-3 text-ink-900 dark:text-dark-text hover:text-ink-900 dark:hover:text-dark-text">
               <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-sm">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                 </svg>
               </div>
-              <span class="font-semibold text-lg tracking-tight">Cortex</span>
+              <span class="header-logo-text font-semibold text-lg tracking-tight">Cortex</span>
             </a>
-            <span class="hidden sm:inline-block text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">beta</span>
+            <span class="beta-badge hidden sm:inline-block text-xs text-ink-500 dark:text-dark-text-muted bg-cream-100 dark:bg-dark-surface-light px-2 py-0.5 rounded-full">beta</span>
           </div>
 
           <%# Navigation Links %>
@@ -94,14 +112,30 @@
 
           <%# User Menu / Actions %>
           <div class="flex items-center gap-3">
+            <%# Dark Mode Toggle %>
+            <button type="button"
+                    class="dark-mode-toggle"
+                    data-action="click->dark-mode#toggle"
+                    title="Toggle dark mode"
+                    aria-label="Toggle dark mode">
+              <%# Sun icon (shown in dark mode) %>
+              <svg class="hidden dark:block w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+              <%# Moon icon (shown in light mode) %>
+              <svg class="block dark:hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+              </svg>
+            </button>
+
             <%# API Status Indicator %>
-            <div class="hidden sm:flex items-center gap-2 text-xs text-stone-500 bg-stone-50 px-3 py-1.5 rounded-full border border-stone-200/60">
+            <div class="api-status hidden sm:flex items-center gap-2 text-xs text-ink-500 dark:text-dark-text-muted bg-cream-50 dark:bg-dark-surface px-3 py-1.5 rounded-full border border-cream-200 dark:border-dark-border">
               <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
               <span>API Connected</span>
             </div>
 
             <%# User Avatar / Menu %>
-            <button type="button" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-stone-100 transition-colors">
+            <button type="button" class="user-menu-button flex items-center gap-2 p-1.5 rounded-lg hover:bg-cream-100 dark:hover:bg-dark-surface-light transition-colors">
               <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center text-white text-sm font-medium">
                 U
               </div>
@@ -119,18 +153,18 @@
     </main>
 
     <%# Footer %>
-    <footer class="border-t border-stone-200/60 bg-white/50 mt-auto">
+    <footer class="border-t border-cream-200 dark:border-dark-border bg-white/50 dark:bg-dark-surface/50 mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-2 text-sm text-stone-500">
-            <span class="font-medium text-stone-700">Cortex</span>
+          <div class="footer-text flex items-center gap-2 text-sm text-ink-500 dark:text-dark-text-muted">
+            <span class="footer-brand font-medium text-ink-700 dark:text-dark-text">Cortex</span>
             <span>by</span>
-            <a href="https://brainzlab.ai" class="text-orange-600 hover:text-orange-700 font-medium">Brainz Lab</a>
+            <a href="https://brainzlab.ai" class="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 font-medium">Brainz Lab</a>
           </div>
-          <div class="flex items-center gap-6 text-sm text-stone-500">
-            <a href="#" class="hover:text-stone-700 transition-colors">Documentation</a>
-            <a href="#" class="hover:text-stone-700 transition-colors">API Reference</a>
-            <a href="#" class="hover:text-stone-700 transition-colors">Status</a>
+          <div class="flex items-center gap-6 text-sm text-ink-500 dark:text-dark-text-muted">
+            <a href="#" class="footer-link hover:text-ink-700 dark:hover:text-dark-text transition-colors">Documentation</a>
+            <a href="#" class="footer-link hover:text-ink-700 dark:hover:text-dark-text transition-colors">API Reference</a>
+            <a href="#" class="footer-link hover:text-ink-700 dark:hover:text-dark-text transition-colors">Status</a>
           </div>
         </div>
       </div>
