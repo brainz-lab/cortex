@@ -1,0 +1,55 @@
+# Kamal deployment configuration for Cortex
+service: cortex
+image: brainz/cortex
+
+servers:
+  web:
+    - an-ssh.brainz.computer
+  job:
+    hosts:
+      - an-ssh.brainz.computer
+    cmd: bin/jobs
+
+proxy:
+  ssl: false  # Cloudflare handles TLS termination
+  host: cortex.brainzlab.ai
+
+registry:
+  server: registry.digitalocean.com
+  username:
+    - KAMAL_REGISTRY_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - VAULT_API_KEY
+    - SERVICE_KEY
+    - ANTHROPIC_API_KEY
+  clear:
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: "true"
+    RAILS_SERVE_STATIC_FILES: "true"
+    SOLID_QUEUE_IN_PUMA: "false"
+    VAULT_URL: https://vault.brainzlab.ai
+    VAULT_AUTO_LOAD: "true"
+    BRAINZLAB_PLATFORM_URL: https://platform.brainzlab.ai
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"
+
+volumes:
+  - "cortex_storage:/rails/storage"
+
+# asset_path: /rails/public/assets  # Disabled for macOS - requires GNU cp
+
+builder:
+  arch: arm64
+
+ssh:
+  user: afmp

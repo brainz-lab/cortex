@@ -66,3 +66,7 @@
 
 # Test coverage
 coverage/
+
+# Kamal secrets (contains real credentials)
+.kamal/secrets
+.kamal/secrets.tmp
