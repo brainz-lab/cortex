@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> **Secrets Reference**: See `../.secrets.md` (gitignored) for master keys, server access, and MCP tokens.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project: Cortex by Brainz Lab
@@ -100,4 +102,35 @@ if Cortex.enabled?(:new_checkout, user: current_user)
 else
   render_old_checkout
 end
+```
+
+## Kamal Production Access
+
+**IMPORTANT**: When using `kamal app exec --reuse`, docker exec doesn't inherit container environment variables. You must pass `SECRET_KEY_BASE` explicitly.
+
+```bash
+# Navigate to this service directory
+cd /Users/afmp/brainz/brainzlab/cortex
+
+# Get the master key (used as SECRET_KEY_BASE)
+cat config/master.key
+
+# Run Rails console commands
+kamal app exec -p --reuse -e SECRET_KEY_BASE:<master_key> 'bin/rails runner "<ruby_code>"'
+
+# Example: Count flags
+kamal app exec -p --reuse -e SECRET_KEY_BASE:<master_key> 'bin/rails runner "puts Flag.count"'
+```
+
+### Running Complex Scripts
+
+For multi-line Ruby scripts, create a local file, scp to server, docker cp into container, then run with rails runner. See main brainzlab/CLAUDE.md for details.
+
+### Other Kamal Commands
+
+```bash
+kamal deploy              # Deploy
+kamal app logs -f         # View logs
+kamal lock release        # Release stuck lock
+kamal secrets print       # Print evaluated secrets
 ```
