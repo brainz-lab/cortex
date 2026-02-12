@@ -4,10 +4,12 @@ image: brainz/cortex
 
 servers:
   web:
-    - an-ssh.brainz.computer
+    - afmp@an-ssh.brainz.computer
+    - edixonhernandez@ed-ssh.brainz.computer
   job:
     hosts:
-      - an-ssh.brainz.computer
+      - afmp@an-ssh.brainz.computer
+      - edixonhernandez@ed-ssh.brainz.computer
     cmd: bin/jobs
 
 proxy:
@@ -54,5 +56,4 @@ volumes:
 builder:
   arch: arm64
 
-ssh:
-  user: afmp
+# SSH users configured per-host in servers section
