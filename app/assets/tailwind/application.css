@@ -1,6 +1,6 @@
 /* BrainzLab Unified Design System */
 @import "tailwindcss";
-@import "../../../brainzlab-ui/app/assets/stylesheets/brainzlab_ui/base.css";
+@import "./brainzlab_ui/base.css";
 
 /* Cortex-specific dark mode overrides */
 @import "../stylesheets/dark_mode.css";
