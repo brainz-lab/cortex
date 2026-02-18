@@ -8,6 +8,7 @@ Rails.application.configure do
   config.hosts << "cortex.localhost"
   config.hosts << /.*\.localhost/
   config.hosts << ".brainzlab.local"
+  config.hosts << "localhost"
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
