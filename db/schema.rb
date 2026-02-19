@@ -13,8 +13,10 @@
 ActiveRecord::Schema[8.1].define(version: 1) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "timescaledb"
+  enable_extension "uuid-ossp"
   enable_extension "vector"
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
